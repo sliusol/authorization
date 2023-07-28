@@ -1,0 +1,98 @@
+<div class="container">
+
+<form class="form" [formGroup] = "authForm" (ngSubmit)="submit()">
+
+  <app-first-name-control formControlName="firstName"></app-first-name-control>
+  <app-last-name-control formControlName="lastName"></app-last-name-control>
+  <app-email-control formControlName="email"></app-email-control>
+  
+  <div>
+    <label class="label">Password:</label>
+    <div class="phone-input-container">
+    <input class="input" [type]="showPassword ? 'text' : 'password'" name="password" formControlName="password">
+    <button class="add-phone-button" type="button" (click)="togglePasswordVisibility()">
+      {{ showPassword ? 'Hide' : 'Show' }}
+    </button>
+    </div>
+  </div>
+
+  <div formArrayName="phones">
+    <div *ngFor="let phone of getFormsControls()['controls']; let i = index">
+    <label class="label">Phone Number:</label>
+  <div class="phone-input-container">
+    <input class="input" type="tel" name="phone" formControlName="{{i}}">
+    <button class="add-phone-button" (click)="addPhone()">+</button>
+    <button type="button" class="add-phone-button" *ngIf="i > 0" (click)="removePhone(i)">-</button>
+  </div>
+    </div>
+  </div>
+
+  <div>
+  <label class="label">Country: </label>
+  <select class="select" id="country" formControlName="country">
+    <option *ngFor="let country of countries$ | async" [value]="country">{{ country }}</option>
+  </select>
+</div>
+  
+<!-- submit -->
+<button class="button " type="submit">Submit</button>
+
+</form>
+
+
+<div *ngIf="submittedData">
+  <p>Form Data: {{submittedData}}</p>
+</div>
+
+</div>
+
+
+  <!-- firstName -->
+  <!-- <div>
+    <label class="label">First Name:</label>
+    <input class="input" type="text" name="firstName" formControlName="firstName">
+  </div> -->
+
+<!-- lastName   -->
+  <!-- <div>
+    <label class="label">Last Name:</label>
+    <input class="input" type="text" name="lastName" formControlName="lastName">
+  </div> -->
+
+<!-- email   -->
+  <!-- <div>
+    <label class="label">Email:</label>
+    <input class="input" type="email" name="email" formControlName="email">
+  </div> -->
+
+<!-- password   -->
+  <!-- <div>
+    <label class="label">Password:</label>
+    <div class="phone-input-container">
+    <input class="input" [type]="showPassword ? 'text' : 'password'" name="password" formControlName="password">
+    <button class="add-phone-button" type="button" (click)="togglePasswordVisibility()">
+      {{ showPassword ? 'Hide' : 'Show' }}
+    </button>
+    </div>
+  </div> -->
+  
+<!-- phoneNumber -->
+  <!-- <div formArrayName="phones">
+    <div *ngFor="let phone of getFormsControls()['controls']; let i = index">
+    <label class="label">Phone Number:</label>
+  <div class="phone-input-container">
+    <input class="input" type="tel" name="phone" formControlName="{{i}}">
+    <button class="add-phone-button" (click)="addPhone()">+</button>
+    <button type="button" class="add-phone-button" *ngIf="i > 0" (click)="removePhone(i)">-</button>
+  </div>
+    </div>
+  </div> -->
+
+<!-- country   -->
+<!-- <div>
+  <label class="label">Country: </label>
+  <select class="select" id="country" formControlName="country">
+    <option *ngFor="let country of countries$ | async" [value]="country">{{ country }}</option>
+  </select>
+</div>  -->
+
