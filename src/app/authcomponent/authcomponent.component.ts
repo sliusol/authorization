@@ -1,63 +1,57 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import {of, Observable} from 'rxjs';
-import { countries } from '../constants/countries.data';
+import { CountryService } from '../country.service';
 
 
 
 @Component({
   selector: 'app-authcomponent',
   templateUrl: './authcomponent.component.html',
-  styleUrls: ['./authcomponent.component.css']
+  styleUrls: ['./authcomponent.component.css'],
+  providers: [CountryService]
 })
 export class AuthcomponentComponent implements OnInit{
-  countries$!:Observable<string[]>;
-  showPassword: boolean = false;
-  submittedData: any;
+  public countries$!:Observable<string[]>;
+  public showPassword: boolean = false;
+  public submittedData: any;
 
-  authForm: FormGroup;
+  public authForm: FormGroup;
 
-  constructor(){
-    this.authForm = new FormGroup(
-      {
-        "firstName": new FormControl("", Validators.required),
-        "lastName": new FormControl("", Validators.required),
-        "email": new FormControl("", [Validators.required, Validators.email]),
-        "password": new FormControl("", [Validators.required,
-        Validators.minLength(6),
-      Validators.pattern(/^(?=.*[a-zA-Z]).+$/)]),
-        "phones": new FormArray([
-          new FormControl("", [Validators.required, Validators.pattern(/^[0-9]+$/)])
-        ]),
-        "country": new FormControl("", Validators.required),
-    }
-    );
+  constructor(private fb: FormBuilder, 
+    private countryService: CountryService){
+    this.authForm = this.fb.group({
+      "firstName": ["", Validators.required],
+      "lastName": ["", Validators.required],
+      "email": ["", [Validators.required, Validators.email, Validators.pattern(/[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}/)]],
+      "password": ["", [Validators.required,
+      Validators.minLength(6),
+      Validators.pattern(/^(?=.*[a-zA-Z]).+$/)]],
+      "phones": this.fb.array ([this.fb.control("", [Validators.required, Validators.pattern(/^[0-9]+$/)])]),
+      "country": ["", Validators.required],
+    });
   }
   
-  ngOnInit(): void {
-   this.countries$=this.getCountries(); 
+  public ngOnInit(): void {
+    this.countries$=this.countryService.getCountries(); 
   }
 
-  getCountries(){
-    return of(countries)
-  }
-
-  getFormsControls():FormArray{
+  public  getFormsControls(): FormArray {
     return this.authForm.controls['phones'] as FormArray;
   }
-  addPhone(){
-    (<FormArray>this.authForm.controls['phones']).push(new FormControl('', Validators.required))
+  public  addPhone(): void {
+    this.getFormsControls().push(new FormControl('', Validators.required))
   }
 
-  removePhone(index: number){
+  public removePhone(index: number): void {
     if (index > 0) {
-      (this.authForm.controls['phones'] as FormArray).removeAt(index);
+      this.getFormsControls().removeAt(index);
     }
   }
 
-  togglePasswordVisibility(){this.showPassword = !this.showPassword;}
+  public togglePasswordVisibility(): void {this.showPassword = !this.showPassword;}
 
-  submit() {
+  public submit():void {
     if (this.authForm.valid) {
       this.submittedData = this.authForm.value;
     }

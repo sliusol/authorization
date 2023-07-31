@@ -2,10 +2,25 @@
 
 <form class="form" [formGroup] = "authForm" (ngSubmit)="submit()">
 
-  <app-first-name-control formControlName="firstName"></app-first-name-control>
-  <app-last-name-control formControlName="lastName"></app-last-name-control>
-  <app-email-control formControlName="email"></app-email-control>
+  <!-- firstName -->
+  <div>
+    <label class="label">First Name:</label>
+    <input class="input" type="text" name="firstName" formControlName="firstName">
+  </div> 
+
+  <!-- lastName   -->
+  <div>
+    <label class="label">Last Name:</label>
+    <input class="input" type="text" name="lastName" formControlName="lastName">
+  </div> 
+
+  <!-- email   -->
+  <div>
+    <label class="label">Email:</label>
+    <input class="input" type="email" name="email" formControlName="email">
+  </div> 
   
+  <!-- password -->
   <div>
     <label class="label">Password:</label>
     <div class="phone-input-container">
@@ -16,6 +31,7 @@
     </div>
   </div>
 
+  <!-- phones -->
   <div formArrayName="phones">
     <div *ngFor="let phone of getFormsControls()['controls']; let i = index">
     <label class="label">Phone Number:</label>
@@ -27,6 +43,7 @@
     </div>
   </div>
 
+  <!-- country -->
   <div>
   <label class="label">Country: </label>
   <select class="select" id="country" formControlName="country">
@@ -40,8 +57,8 @@
 </form>
 
 
-<div *ngIf="submittedData">
-  <p>Form Data: {{submittedData}}</p>
+<div class="submitted" *ngIf="submittedData">
+  <p>Form Data: {{submittedData | json}}</p>
 </div>
 
 </div>

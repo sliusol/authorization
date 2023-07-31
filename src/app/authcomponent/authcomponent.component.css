@@ -3,6 +3,7 @@
         justify-content: center;
         align-items: center;
         height: 100vh; 
+        flex-direction: column;
       }
 .form {
         width: 300px;
@@ -65,3 +66,10 @@
       input.ng-touched.ng-invalid {border:solid red 2px;}
 
       input.ng-touched.ng-valid {border:solid green 2px;}
+
+      .submitted {
+        margin-top: 10px;
+        font-size: 14px;
+        font-style: italic;
+        align-items: center;
+      }
