@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import {of, Observable} from 'rxjs';
-import { CountryService } from '../country.service';
+import {Observable} from 'rxjs';
+import { CountryService } from '../shared/services/country-service/country.service';
 
 
 
@@ -19,7 +19,7 @@ export class AuthcomponentComponent implements OnInit{
   public authForm: FormGroup;
 
   constructor(private fb: FormBuilder, 
-    private countryService: CountryService){
+    public countryService: CountryService){
     this.authForm = this.fb.group({
       "firstName": ["", Validators.required],
       "lastName": ["", Validators.required],
