@@ -1,29 +1,54 @@
 <div class="container">
-<form class="form" [formGroup] = "authForm" (ngSubmit)="submit()">
-    <app-input type="text" name="First Name:" formControlName="firstName"></app-input>
-    <app-input  type="text" name="Last Name:" formControlName="lastName"></app-input>
+  <form class="form" [formGroup]="authForm" (ngSubmit)="submit()">
+    <app-input
+      type="text"
+      name="First Name:"
+      formControlName="firstName"
+    ></app-input>
+    <app-input
+      type="text"
+      name="Last Name:"
+      formControlName="lastName"
+    ></app-input>
     <app-input type="email" name="Email:" formControlName="email"></app-input>
     <div class="phone-input-container">
-    <app-input [type]="showPassword ? 'text' : 'password'" name="Password:" formControlName="password"></app-input>
-    <button class="add-phone-button" type="button" (click)="togglePasswordVisibility()">
-      {{ showPassword ? 'Hide' : 'Show' }}
-    </button>
+      <app-input
+        [type]="showPassword ? 'text' : 'password'"
+        name="Password:"
+        formControlName="password"
+      ></app-input>
+      <button
+        class="add-phone-button"
+        type="button"
+        (click)="togglePasswordVisibility()"
+      >
+        {{ showPassword ? "Hide" : "Show" }}
+      </button>
     </div>
-  <div formArrayName="phones">
-    <div *ngFor="let phone of getFormsControls()['controls']; let i = index">
-  <div class="phone-input-container">
-    <app-input type="tel" name="Phone:" formControlName="{{i}}"></app-input>
-    <button class="add-phone-button" (click)="addPhone()">+</button>
-    <button type="button" class="add-phone-button" *ngIf="i > 0" (click)="removePhone(i)">-</button>
-  </div>
+    <div formArrayName="phones">
+      <div *ngFor="let phone of getFormsControls()['controls']; let i = index">
+        <div class="phone-input-container">
+          <app-input
+            type="tel"
+            name="Phone:"
+            formControlName="{{ i }}"
+          ></app-input>
+          <button class="add-phone-button" (click)="addPhone()">+</button>
+          <button
+            type="button"
+            class="add-phone-button"
+            *ngIf="i > 0"
+            (click)="removePhone(i)"
+          >
+            -
+          </button>
+        </div>
+      </div>
     </div>
+    <app-select name="Country:" formControlName="country"> </app-select>
+    <button class="button" type="submit">Submit</button>
+  </form>
+  <div class="submitted" *ngIf="submittedData">
+    <p>Form Data: {{ submittedData | json }}</p>
   </div>
-  <app-select name="Country:" formControlName="country">  
-  </app-select> 
-<button class="button" type="submit">Submit</button>
-</form>
-<div class="submitted" *ngIf="submittedData">
-  <p>Form Data: {{submittedData | json}}</p>
 </div>
-</div>
-

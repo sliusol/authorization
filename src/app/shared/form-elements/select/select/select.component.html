@@ -1,5 +1,6 @@
 <label class="label">{{ name }}</label>
-  <select class="select" [formControl]="control">
-    <option *ngFor="let country of countries$ | async" [value]="country">{{ country }}</option> 
-  </select>
-
+<select class="select" [formControl]="control">
+  <option *ngFor="let country of countries$ | async" [value]="country">
+    {{ country }}
+  </option>
+</select>

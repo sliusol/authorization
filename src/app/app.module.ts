@@ -8,27 +8,15 @@ import { AuthcomponentComponent } from './authcomponent/authcomponent.component'
 import { InputComponent } from './shared/form-elements/input/input.component';
 import { SelectComponent } from './shared/form-elements/select/select/select.component';
 
-
-
-
-
-
 @NgModule({
   declarations: [
     AppComponent,
     AuthcomponentComponent,
     SelectComponent,
-    InputComponent
-    
+    InputComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    ReactiveFormsModule,
-    FormsModule,
-    
-  ],
+  imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule, FormsModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
