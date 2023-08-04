@@ -49,12 +49,12 @@
       }
       
       .phone-input-container {
-        display: flex;
-        align-items:flex-start;
+        display:flex;
+        align-items:center;
       }
       
       .add-phone-button {
-        margin-left: 0.5rem;
+        margin-left: 1.5rem;
         padding: 0.5rem;
         border: none;
         border-radius: 35px;
@@ -63,9 +63,9 @@
         cursor: pointer;
       }
       
-      input.ng-touched.ng-invalid {border:solid red 2px;}
+      app-input.ng-touched.ng-invalid {border:solid red 2px;}
 
-      input.ng-touched.ng-valid {border:solid green 2px;}
+      app-input.ng-touched.ng-valid {border:solid green 2px;}
 
       .submitted {
         margin-top: 10px;
