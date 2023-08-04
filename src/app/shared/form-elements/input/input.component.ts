@@ -1,6 +1,9 @@
-import { Component, forwardRef } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Component, forwardRef, Injector, Input, OnInit } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, UntypedFormControl } from '@angular/forms';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+
+@UntilDestroy()
 @Component({
   selector: 'app-input',
   templateUrl: './input.component.html',
@@ -11,22 +14,36 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     multi:true
   }]
 })
-export class InputComponent implements ControlValueAccessor{
+export class InputComponent implements ControlValueAccessor, OnInit{
+  @Input() name: string='';
+  @Input() type: string=''
+
   public value: string | undefined;
-  public changed: ((value: string) => void) | undefined;
-  public touched: (() => void) | undefined;
   
+  public onTouched = () => {};
+  public onChange = (value: any) => {};
+  
+  public control: UntypedFormControl = new UntypedFormControl('');
 
+  constructor(private injector: Injector){}
 
-  constructor(){}
+  public ngOnInit(): void {
+  
+        this.control.markAsTouched = function (): void {};
+        this.control.valueChanges.pipe(untilDestroyed(this)).subscribe((value) => {
+          this.onChange(value); 
+        });
 
-  public writeValue(value: string): void {
-    this.value = value;
-  }
+      }
+
+ 
+    public writeValue(obj: any): void {
+          this.control?.setValue(obj);
+        }
   public registerOnChange(fn: any): void {
-    this.changed = fn;
+    this.onChange = fn;
   }
   public registerOnTouched(fn: any): void {
-    this.touched = fn;
+    this.onTouched = fn;
   }
 }
