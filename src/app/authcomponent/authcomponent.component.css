@@ -77,3 +77,12 @@ app-input.ng-touched.ng-valid {
   font-style: italic;
   align-items: center;
 }
+
+.validation {
+  font-size: small;
+  font-style: italic;
+  color: red;
+  padding: 4px;
+  margin: 7px;
+  text-align: start;
+}
