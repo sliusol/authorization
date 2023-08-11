@@ -6,7 +6,6 @@ import {
 } from '@angular/forms';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Observable } from 'rxjs';
-import { CountryService } from 'src/app/shared/services/country-service/country.service';
 
 @UntilDestroy()
 @Component({
@@ -19,30 +18,24 @@ import { CountryService } from 'src/app/shared/services/country-service/country.
       useExisting: forwardRef(() => SelectComponent),
       multi: true,
     },
-    [CountryService],
   ],
 })
 export class SelectComponent implements ControlValueAccessor, OnInit {
   @Input() name: string = '';
+  @Input() countries$: Observable<string[]>;
 
   public value: string | undefined;
-  public countries$: Observable<string[]>;
 
   public onTouched = () => {};
   public onChange = (value: any) => {};
 
   public control: UntypedFormControl;
 
-  constructor(
-    private injector: Injector,
-    public countryService: CountryService
-  ) {
+  constructor(private injector: Injector) {
     this.control = new UntypedFormControl();
   }
 
   public ngOnInit(): void {
-    this.countries$ = this.countryService.getCountries();
-
     this.control.markAsTouched = function (): void {};
 
     this.control.valueChanges.pipe(untilDestroyed(this)).subscribe((value) => {
