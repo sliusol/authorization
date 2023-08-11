@@ -1,15 +1,18 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { countries } from '../../constants/countries.data';
+import { Observable } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class CountryService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   public getCountries(): Observable<string[]> {
-    return of(countries);
+    return this.http.get<string[]>('/assets/country.json');
+    
   }
+  
 }
