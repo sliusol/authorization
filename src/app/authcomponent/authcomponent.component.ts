@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 import {
   FormArray,
   FormBuilder,
@@ -6,6 +6,8 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { CountryService } from '../shared/services/country-service/country.service';
 
 @Component({
   selector: 'app-authcomponent',
@@ -15,20 +17,16 @@ import {
 export class AuthcomponentComponent {
   public showPassword: boolean = false;
   public submittedData: any;
+  public countries$: Observable<string[]>;
 
   public authForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private countryService: CountryService) {
+    this.countries$ = this.countryService.getCountries();
     this.authForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      email: [
-        '',
-        [
-          Validators.required,
-          Validators.email,
-        ],
-      ],
+      email: ['', [Validators.required, Validators.email]],
       password: [
         '',
         [
@@ -67,11 +65,15 @@ export class AuthcomponentComponent {
 
   public submit(): void {
     if (this.authForm.valid) {
-      if (this.authForm.get('password')?.value !== this.authForm.get('confirmPassword')?.value) {
-        this.authForm.setErrors({ 'passwordMismatch': true });
+      if (
+        this.authForm.get('password')?.value !==
+        this.authForm.get('confirmPassword')?.value
+      ) {
+        this.authForm.setErrors({ passwordMismatch: true });
       } else {
-      this.submittedData = this.authForm.value;
+        this.submittedData = this.authForm.value;
+      }
+      console.log(this.authForm);
     }
-    console.log(this.authForm);
   }
-}}
+}

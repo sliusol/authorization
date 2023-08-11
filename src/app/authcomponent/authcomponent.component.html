@@ -156,7 +156,12 @@
         </div>
       </div>
     </div>
-    <app-select name="Country:" formControlName="country"> </app-select>
+    <app-select
+      name="Country:"
+      [countries$]="countries$"
+      formControlName="country"
+    >
+    </app-select>
     <div
       *ngIf="
         authForm.get('country')?.invalid &&
