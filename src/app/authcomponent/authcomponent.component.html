@@ -92,6 +92,30 @@
         {{ showPassword ? "Hide" : "Show" }}
       </button>
     </div>
+
+    <app-input
+      [type]="showPassword ? 'text' : 'confirmPassword'"
+      name="Confirm Password:"
+      formControlName="confirmPassword"
+    ></app-input>
+    <div
+      *ngIf="
+        authForm.get('confirmPassword')?.invalid &&
+        (authForm.get('confirmPassword')?.dirty ||
+          authForm.get('confirmPassword')?.touched)
+      "
+    >
+      <div
+        class="validation"
+        *ngIf="authForm.get('confirmPassword')?.hasError('required')"
+      >
+        Confirm Password is required.
+      </div>
+      <div class="validation" *ngIf="authForm.errors?.['passwordMismatch']">
+        Passwords do not match.
+      </div>
+    </div>
+
     <div formArrayName="phones">
       <div *ngFor="let phone of getFormsControls()['controls']; let i = index">
         <div class="phone-input-container">
@@ -107,10 +131,16 @@
                 getFormsControls().controls[i]?.touched)
             "
           >
-            <div class="validation" *ngIf="getFormsControls().controls[i]?.hasError('required')">
+            <div
+              class="validation"
+              *ngIf="getFormsControls().controls[i]?.hasError('required')"
+            >
               Phone is required.
             </div>
-            <div class="validation" *ngIf="getFormsControls().controls[i]?.hasError('pattern')">
+            <div
+              class="validation"
+              *ngIf="getFormsControls().controls[i]?.hasError('pattern')"
+            >
               Phone must contain only numbers.
             </div>
           </div>
@@ -140,7 +170,9 @@
         *Country is required.
       </div>
     </div>
-    <button class="button" type="submit">Submit</button>
+    <button class="button" [disabled]="!authForm.valid" type="submit">
+      Submit
+    </button>
   </form>
   <div class="submitted" *ngIf="submittedData">
     <p>Form Data: {{ submittedData | json }}</p>

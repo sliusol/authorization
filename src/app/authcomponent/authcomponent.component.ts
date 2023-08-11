@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component} from '@angular/core';
 import {
   FormArray,
   FormBuilder,
@@ -37,6 +37,7 @@ export class AuthcomponentComponent {
           Validators.pattern(/^(?=.*[a-zA-Z]).+$/),
         ],
       ],
+      confirmPassword: ['', Validators.required],
       phones: this.fb.array([
         this.fb.control('', [
           Validators.required,
@@ -66,8 +67,11 @@ export class AuthcomponentComponent {
 
   public submit(): void {
     if (this.authForm.valid) {
+      if (this.authForm.get('password')?.value !== this.authForm.get('confirmPassword')?.value) {
+        this.authForm.setErrors({ 'passwordMismatch': true });
+      } else {
       this.submittedData = this.authForm.value;
     }
     console.log(this.authForm);
   }
-}
+}}
