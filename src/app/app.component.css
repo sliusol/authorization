@@ -1,0 +1,23 @@
+/* .container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+} */
+
+.button {
+  display: block;
+  padding: 0.7rem 1rem;
+  margin-top: 1rem;
+  border: none;
+  border-radius: 0.25rem;
+  background-color: #3994f5;
+  color: white;
+  box-shadow: rgba(50, 50, 93, 0.11) 0px 4px 6px;
+  outline: none;
+  height: 45px;
+  width: 20%;
+  cursor: pointer;
+	align-items: flex-start;
+}

@@ -1,2 +1,8 @@
 <label class="label">{{ name }}</label>
 <input class="input" [formControl]="control" [type]="type" />
+
+<!-- <div *ngIf="ngControl.control?.invalid && ngControl.control?.touched">
+  <div *ngIf="ngControl.control?.hasError('required')">Field is required</div>
+  <div *ngIf="ngControl.control?.hasError('minlength')">Minimum length is 6 characters</div>
+ 
+</div> -->

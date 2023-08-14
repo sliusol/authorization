@@ -7,6 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { passwordMatchValidator } from '../shared/form-elements/password.validator';
 import { CountryService } from '../shared/services/country-service/country.service';
 
 @Component({
@@ -43,7 +44,7 @@ export class AuthcomponentComponent {
         ]),
       ]),
       country: ['', Validators.required],
-    });
+    }, { validator: passwordMatchValidator() });
   }
 
   public getFormsControls(): FormArray {
@@ -65,15 +66,9 @@ export class AuthcomponentComponent {
 
   public submit(): void {
     if (this.authForm.valid) {
-      if (
-        this.authForm.get('password')?.value !==
-        this.authForm.get('confirmPassword')?.value
-      ) {
-        this.authForm.setErrors({ passwordMismatch: true });
-      } else {
         this.submittedData = this.authForm.value;
       }
       console.log(this.authForm);
     }
   }
-}
+

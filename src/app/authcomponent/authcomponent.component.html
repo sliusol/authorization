@@ -53,7 +53,7 @@
         *Invalid email format.
       </div>
     </div>
-    <div class="phone-input-container">
+  <div class="phone-input-container">
       <app-input
         [type]="showPassword ? 'text' : 'password'"
         name="Password:"
@@ -76,14 +76,15 @@
           *ngIf="authForm.get('password')?.hasError('minlength')"
         >
           Password must be at least 6 characters long.
-        </div>
+        </div> -->
         <div
           class="validation"
           *ngIf="authForm.get('password')?.hasError('pattern')"
         >
           Password must contain at least one letter.
         </div>
-      </div>
+      </div> 
+    
       <button
         class="add-phone-button"
         type="button"
@@ -98,23 +99,12 @@
       name="Confirm Password:"
       formControlName="confirmPassword"
     ></app-input>
-    <div
-      *ngIf="
-        authForm.get('confirmPassword')?.invalid &&
-        (authForm.get('confirmPassword')?.dirty ||
-          authForm.get('confirmPassword')?.touched)
-      "
-    >
-      <div
-        class="validation"
-        *ngIf="authForm.get('confirmPassword')?.hasError('required')"
-      >
-        Confirm Password is required.
-      </div>
-      <div class="validation" *ngIf="authForm.errors?.['passwordMismatch']">
+    <div *ngIf="authForm.hasError('passwordMismatch') && (authForm.get('confirmPassword')?.dirty || authForm.get('confirmPassword')?.touched)">
+      <div class="validation">
         Passwords do not match.
       </div>
-    </div>
+    </div> 
+    
 
     <div formArrayName="phones">
       <div *ngFor="let phone of getFormsControls()['controls']; let i = index">
@@ -143,7 +133,7 @@
             >
               Phone must contain only numbers.
             </div>
-          </div>
+          </div> 
           <button class="add-phone-button" (click)="addPhone()">+</button>
           <button
             type="button"
@@ -174,7 +164,7 @@
       >
         *Country is required.
       </div>
-    </div>
+    </div> 
     <button class="button" [disabled]="!authForm.valid" type="submit">
       Submit
     </button>
@@ -183,3 +173,8 @@
     <p>Form Data: {{ submittedData | json }}</p>
   </div>
 </div>
+
+<!-- <div *ngIf="form.get('name')?.invalid && form.get('name')?.touched">
+  <div *ngIf="form.get('name')?.hasError('required')">Field is required</div>
+  <div *ngIf="form.get('name')?.hasError('minlength')">Minimum length is 6 characters</div>
+</div> -->

@@ -1,6 +1,14 @@
-import { Component, forwardRef, Injector, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  forwardRef,
+  Injector,
+  Input,
+  OnInit,
+  AfterContentInit,
+} from '@angular/core';
 import {
   ControlValueAccessor,
+  NgControl,
   NG_VALUE_ACCESSOR,
   UntypedFormControl,
 } from '@angular/forms';
@@ -19,7 +27,9 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
     },
   ],
 })
-export class InputComponent implements ControlValueAccessor, OnInit {
+export class InputComponent
+  implements ControlValueAccessor, OnInit
+{
   @Input() name: string = '';
   @Input() type: string = '';
 
@@ -31,6 +41,10 @@ export class InputComponent implements ControlValueAccessor, OnInit {
   public control: UntypedFormControl = new UntypedFormControl('');
 
   constructor(private injector: Injector) {}
+
+  // ngAfterContentInit(): void {
+  //   this.ngControl = this.injector.get(NgControl);
+  // }
 
   public ngOnInit(): void {
     this.control.markAsTouched = function (): void {};
