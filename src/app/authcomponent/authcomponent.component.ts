@@ -40,7 +40,7 @@ export class AuthcomponentComponent {
       phones: this.fb.array([
         this.fb.control('', [
           Validators.required,
-          Validators.pattern(/^[0-9]+$/),
+          Validators.pattern(/^(\+375|80)(29|25|44|33)\d{7}$/),
         ]),
       ]),
       country: ['', Validators.required],

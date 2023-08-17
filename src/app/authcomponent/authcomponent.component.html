@@ -1,90 +1,26 @@
 <div class="container">
   <form class="form" [formGroup]="authForm" (ngSubmit)="submit()">
+
     <app-input
       type="text"
       name="First Name:"
       formControlName="firstName"
     ></app-input>
-    <div
-      *ngIf="
-        authForm.get('firstName')?.invalid &&
-        (authForm.get('firstName')?.dirty || authForm.get('firstName')?.touched)
-      "
-    >
-      <div
-        class="validation"
-        *ngIf="authForm.get('firstName')?.hasError('required')"
-      >
-        *First Name is required.
-      </div>
-    </div>
+
     <app-input
       type="text"
       name="Last Name:"
       formControlName="lastName"
     ></app-input>
-    <div
-      *ngIf="
-        authForm.get('lastName')?.invalid &&
-        (authForm.get('lastName')?.dirty || authForm.get('lastName')?.touched)
-      "
-    >
-      <div
-        class="validation"
-        *ngIf="authForm.get('lastName')?.hasError('required')"
-      >
-        *Last Name is required.
-      </div>
-    </div>
+
     <app-input type="email" name="Email:" formControlName="email"></app-input>
-    <div
-      *ngIf="
-        authForm.get('email')?.invalid &&
-        (authForm.get('email')?.dirty || authForm.get('email')?.touched)
-      "
-    >
-      <div
-        class="validation"
-        *ngIf="authForm.get('email')?.hasError('required')"
-      >
-        *Email is required.
-      </div>
-      <div class="validation" *ngIf="authForm.get('email')?.hasError('email')">
-        *Invalid email format.
-      </div>
-    </div>
-  <div class="phone-input-container">
+
+    <div class="phone-input-container">
       <app-input
         [type]="showPassword ? 'text' : 'password'"
         name="Password:"
         formControlName="password"
       ></app-input>
-      <div
-        *ngIf="
-          authForm.get('password')?.invalid &&
-          (authForm.get('password')?.dirty || authForm.get('password')?.touched)
-        "
-      >
-        <div
-          class="validation"
-          *ngIf="authForm.get('password')?.hasError('required')"
-        >
-          Password is required.
-        </div>
-        <div
-          class="validation"
-          *ngIf="authForm.get('password')?.hasError('minlength')"
-        >
-          Password must be at least 6 characters long.
-        </div> -->
-        <div
-          class="validation"
-          *ngIf="authForm.get('password')?.hasError('pattern')"
-        >
-          Password must contain at least one letter.
-        </div>
-      </div> 
-    
       <button
         class="add-phone-button"
         type="button"
@@ -99,12 +35,15 @@
       name="Confirm Password:"
       formControlName="confirmPassword"
     ></app-input>
-    <div *ngIf="authForm.hasError('passwordMismatch') && (authForm.get('confirmPassword')?.dirty || authForm.get('confirmPassword')?.touched)">
-      <div class="validation">
-        Passwords do not match.
-      </div>
-    </div> 
-    
+    <div
+      *ngIf="
+        authForm.hasError('passwordMismatch') &&
+        (authForm.get('confirmPassword')?.dirty ||
+          authForm.get('confirmPassword')?.touched)
+      "
+    >
+      <div class="validation">Passwords do not match.</div>
+    </div>
 
     <div formArrayName="phones">
       <div *ngFor="let phone of getFormsControls()['controls']; let i = index">
@@ -114,26 +53,6 @@
             name="Phone:"
             formControlName="{{ i }}"
           ></app-input>
-          <div
-            *ngIf="
-              getFormsControls().controls[i]?.invalid &&
-              (getFormsControls().controls[i]?.dirty ||
-                getFormsControls().controls[i]?.touched)
-            "
-          >
-            <div
-              class="validation"
-              *ngIf="getFormsControls().controls[i]?.hasError('required')"
-            >
-              Phone is required.
-            </div>
-            <div
-              class="validation"
-              *ngIf="getFormsControls().controls[i]?.hasError('pattern')"
-            >
-              Phone must contain only numbers.
-            </div>
-          </div> 
           <button class="add-phone-button" (click)="addPhone()">+</button>
           <button
             type="button"
@@ -152,29 +71,10 @@
       formControlName="country"
     >
     </app-select>
-    <div
-      *ngIf="
-        authForm.get('country')?.invalid &&
-        (authForm.get('country')?.dirty || authForm.get('country')?.touched)
-      "
-    >
-      <div
-        class="validation"
-        *ngIf="authForm.get('country')?.hasError('required')"
-      >
-        *Country is required.
-      </div>
-    </div> 
-    <button class="button" [disabled]="!authForm.valid" type="submit">
-      Submit
-    </button>
+
+    <button class="button" [disabled]="!authForm.valid" type="submit">Submit</button>
   </form>
   <div class="submitted" *ngIf="submittedData">
     <p>Form Data: {{ submittedData | json }}</p>
   </div>
 </div>
-
-<!-- <div *ngIf="form.get('name')?.invalid && form.get('name')?.touched">
-  <div *ngIf="form.get('name')?.hasError('required')">Field is required</div>
-  <div *ngIf="form.get('name')?.hasError('minlength')">Minimum length is 6 characters</div>
-</div> -->

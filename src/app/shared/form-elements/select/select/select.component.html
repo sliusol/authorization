@@ -4,3 +4,6 @@
     {{ country }}
   </option>
 </select>
+<span class="validation" *ngIf="ngControl?.control?.errors && onTouched">
+  {{  AuthErrors[errorMessageKey]  }}
+</span>
